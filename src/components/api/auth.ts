@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { API_URL } from '../../lib/constants';
+import { API_URL } from '@/lib/constants';
 import { useToast } from '@/hooks/use-toast';
 
 interface LoginCredentials {

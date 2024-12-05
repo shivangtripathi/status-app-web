@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Service, Incident } from '@/types';
+import { Service, Incident, IncidentUpdate } from '@/types';
 
 interface StoreState {
   services: Service[];
@@ -39,7 +39,7 @@ export const useStore = create<StoreState>((set) => ({
   deleteService: (id) =>
     set((state) => ({
       services: state.services.filter((s) => s.id !== id),
-      incidents: state.incidents.filter((i) => i.serviceId !== id),
+      incidents: state.incidents.filter((i) => i.service.id !== id),
     })),
 
   addIncident: (incident) =>
@@ -70,21 +70,23 @@ export const useStore = create<StoreState>((set) => ({
 
   addIncidentUpdate: (incidentId, update) =>
     set((state) => ({
+      ...state,
       incidents: state.incidents.map((i) =>
         i.id === incidentId
           ? {
-              ...i,
-              updates: [
-                ...i.updates,
-                {
-                  ...update,
-                  id: crypto.randomUUID(),
-                  createdAt: new Date(),
-                },
-              ],
-              status: update.status,
-              updatedAt: new Date(),
-            }
+            ...i,
+            updates: [
+              ...i.updates,
+              {
+                id: crypto.randomUUID(),
+                createdAt: new Date(),
+                comment: update.comment,
+                status: update.status
+              },
+            ],
+            status: update.status,
+            updatedAt: new Date(),
+          }
           : i
       ),
     })),

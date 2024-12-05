@@ -10,8 +10,8 @@ import { IncidentTimeline } from './incident-timeline';
 import { Button } from './ui/button';
 
 export function PublicStatus() {
-  const { services = [], isLoading } = useServices();
-  const { incidents = [], isLoading: incidentsLoading } = useIncidents();
+  const { services = [] } = useServices();
+  const { incidents = [] } = useIncidents();
   const activeIncidents = incidents.filter((i) => i.status !== 'resolved');
   const recentIncidents = [...incidents].slice(0, 5);
 

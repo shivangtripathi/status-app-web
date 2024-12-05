@@ -18,7 +18,7 @@ const useIncidents = () => {
   });
 
   const createIncidentMutation = useMutation({
-    mutationFn: async (newIncident: Omit<Incident, 'id' | 'createdAt' | 'updatedAt' | 'updates'>) => {
+    mutationFn: async (newIncident: Omit<Incident, 'id' | 'createdAt' | 'updatedAt' | 'updates' | 'service'>) => {
       const response = await fetch(`${API_URL}/admin/incidents`, {
         method: 'POST',
         headers: {
@@ -51,7 +51,7 @@ const useIncidents = () => {
   });
 
   const updateIncidentMutation = useMutation({
-    mutationFn: async (updatedIncident: { comment: string, status: string, id: string }) => {
+    mutationFn: async (updatedIncident: { description: string, status: Incident['status'], id: string }) => {
       const response = await fetch(`${API_URL}/admin/incidents/${updatedIncident.id}/updates`, {
         method: 'POST',
         headers: {

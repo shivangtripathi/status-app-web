@@ -11,7 +11,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Incident } from '@/types';
-import { useStore } from '@/lib/store';
 import useIncidents from './api/incidents';
 
 interface IncidentUpdateDialogProps {
@@ -20,7 +19,6 @@ interface IncidentUpdateDialogProps {
 }
 
 export function IncidentUpdateDialog({ incident, onClose }: IncidentUpdateDialogProps) {
-  const addIncidentUpdate = useStore((state) => state.addIncidentUpdate);
   
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<Incident['status']>(incident.status);
@@ -31,7 +29,7 @@ export function IncidentUpdateDialog({ incident, onClose }: IncidentUpdateDialog
 
     updateIncident({
       id: incident.id,
-      comment: message,
+      description: message,
       status,
     });
     

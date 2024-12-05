@@ -1,15 +1,13 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { StatusBadge } from '@/components/status-badge';
 import { Service } from '@/types';
-import { MoreVertical, AlertCircle } from 'lucide-react';
+import { MoreVertical } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useStore } from '@/lib/store';
 import useServices from './api/services';
 
 interface ServiceCardProps {
