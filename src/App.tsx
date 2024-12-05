@@ -4,6 +4,7 @@ import { PublicStatus } from '@/components/public-status';
 import { ProtectedRoute } from '@/components/protected-route';
 import { AdminDashboard } from '@/components/admin-dashboard';
 import { Toaster } from '@/components/ui/toaster';
+import { API_URL } from '@/lib/constants';
 import {
   QueryClient,
   QueryClientProvider,
@@ -18,7 +19,7 @@ const queryClient = new QueryClient();
 const App = () => {
   useEffect(() => {
     // Create WebSocket connection
-    const socket = io('http://localhost:5001');
+    const socket = io(API_URL);
 
     socket.on('connect', () => {
       console.log('WebSocket Connected');

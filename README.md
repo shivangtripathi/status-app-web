@@ -28,19 +28,11 @@ Service Check is a web application that allows you to check the status of your s
    # or
    yarn install
    ```
-
-3. Create a .env file in the root directory and add required environment variables:
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Start the development server:
+3. Start the development server:
    ```bash
    npm run dev
    # or
    yarn dev
    ```
-
-The application will be available at http://localhost:5173
 
 
