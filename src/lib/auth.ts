@@ -17,7 +17,7 @@ export const useAuth = create<AuthState>()(
     (set) => ({
       user: null,
       isAuthenticated: false,
-      login: async (user: User, token: string) => {
+      login: async (user: User) => {
         set({
           user,
           isAuthenticated: true,

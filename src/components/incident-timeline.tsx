@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from 'date-fns';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Incident, IncidentUpdate } from '@/types';
+import { Incident } from '@/types';
 import { StatusBadge } from './status-badge';
 import { cn } from '@/lib/utils';
 
@@ -12,7 +12,7 @@ export function IncidentTimeline({ incident }: IncidentTimelineProps) {
   return (
     <ScrollArea className="max-h-[300px] hover:overflow-y-auto pr-4">
       <div className="space-y-4">
-        {[...incident.updates].reverse().map((update, index) => (
+        {[...incident.updates].map((update, index) => (
           <div key={update.id} className="relative pl-6">
             <div
               className={cn(

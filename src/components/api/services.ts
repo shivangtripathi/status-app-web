@@ -1,13 +1,14 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Service } from '@/types';
 import { useToast } from '@/hooks/use-toast';
+import { API_URL } from '@/lib/constants';
 
 const useServices = () => {
   const { toast } = useToast();
   const { data: services, isLoading, refetch } = useQuery<Service[]>({
     queryKey: ['services'],
     queryFn: async () => {
-      const response = await fetch('http://localhost:5001/api/public/services');
+      const response = await fetch(`${API_URL}/public/services`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -18,11 +19,11 @@ const useServices = () => {
 
   const createServiceMutation = useMutation({
     mutationFn: async (newService: Omit<Service, 'id' | 'updatedAt' | 'createdAt'>) => {
-      const response = await fetch('http://localhost:5001/api/admin/services', {
+      const response = await fetch(`${API_URL}/admin/services`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzdGF0dXNjaGVjay5jb20iLCJpYXQiOjE3MzMzMjgxOTAsImV4cCI6MTczMzkzMjk5MH0.LtA3Uu8e5ce9vOpHvkpu0ZsOzqHRIH3pIh3gFInbkUM`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify(newService),
       });
@@ -51,11 +52,11 @@ const useServices = () => {
 
   const updateServiceMutation = useMutation({
     mutationFn: async (updatedService: Service) => {
-      const response = await fetch(`http://localhost:5001/api/admin/services/${updatedService.id}`, {
+      const response = await fetch(`${API_URL}/admin/services/${updatedService.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzdGF0dXNjaGVjay5jb20iLCJpYXQiOjE3MzMzMjgxOTAsImV4cCI6MTczMzkzMjk5MH0.LtA3Uu8e5ce9vOpHvkpu0ZsOzqHRIH3pIh3gFInbkUM`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify(updatedService),
       });
@@ -84,10 +85,11 @@ const useServices = () => {
 
   const deleteServiceMutation = useMutation({
     mutationFn: async (id: string) => {
-      await fetch(`http://localhost:5001/api/admin/services/${id}`, {
-        method: 'DELETE', headers: {
+      await fetch(`${API_URL}/admin/services/${id}`, {
+        method: 'DELETE',
+        headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
-        }
+        },
       });
     },
     onSuccess: () => {

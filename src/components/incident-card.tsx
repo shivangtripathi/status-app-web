@@ -4,7 +4,6 @@ import { Incident, Service } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
 import { IncidentTimeline } from './incident-timeline';
 import { StatusBadge } from './status-badge';
-import { useStore } from '@/lib/store';
 import { MoreVertical, MessageSquarePlus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {

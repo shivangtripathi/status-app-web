@@ -1,13 +1,14 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Incident } from '@/types';
 import { useToast } from '@/hooks/use-toast';
+import { API_URL } from '@/lib/constants';
 
 const useIncidents = () => {
   const { toast } = useToast();
   const { data: incidents, isLoading, refetch } = useQuery<Incident[]>({
     queryKey: ['incidents'],
     queryFn: async () => {
-      const response = await fetch('http://localhost:5001/api/public/incidents');
+      const response = await fetch(`${API_URL}/public/incidents`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -18,7 +19,7 @@ const useIncidents = () => {
 
   const createIncidentMutation = useMutation({
     mutationFn: async (newIncident: Omit<Incident, 'id' | 'createdAt' | 'updatedAt' | 'updates'>) => {
-      const response = await fetch('http://localhost:5001/api/admin/incidents', {
+      const response = await fetch(`${API_URL}/admin/incidents`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ const useIncidents = () => {
 
   const updateIncidentMutation = useMutation({
     mutationFn: async (updatedIncident: { comment: string, status: string, id: string }) => {
-      const response = await fetch(`http://localhost:5001/api/admin/incidents/${updatedIncident.id}/updates`, {
+      const response = await fetch(`${API_URL}/admin/incidents/${updatedIncident.id}/updates`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,8 +85,9 @@ const useIncidents = () => {
 
   const deleteIncidentMutation = useMutation({
     mutationFn: async (id: string) => {
-      await fetch(`http://localhost:5001/api/admin/incidents/${id}`, {
-        method: 'DELETE', headers: {
+      await fetch(`${API_URL}/admin/incidents/${id}`, {
+        method: 'DELETE',
+        headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });

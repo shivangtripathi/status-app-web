@@ -12,7 +12,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Incident } from '@/types';
-import { useStore } from '@/lib/store';
 import useIncidents from './api/incidents';
 import useServices from './api/services';
 
@@ -24,7 +23,6 @@ interface IncidentDialogProps {
 
 export function IncidentDialog({ serviceId, incident, onClose }: IncidentDialogProps) {
   const {services = []} = useServices();
-  // const addIncident = useStore((state) => state.addIncident);
   const createIncident = useIncidents().createIncident; 
   const updateIncident = useIncidents().updateIncident;
   
@@ -43,18 +41,15 @@ export function IncidentDialog({ serviceId, incident, onClose }: IncidentDialogP
     if (incident) {
       updateIncident({
         ...incident,
-        title,
         description,
-        status,
-        severity,
+        status
       });
     } else {
       createIncident({
         title,
         description,
         status,
-        severity,
-        serviceId: selectedServiceId,
+        severity
       });
     }
     
@@ -118,7 +113,7 @@ export function IncidentDialog({ serviceId, incident, onClose }: IncidentDialogP
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="status">Status</Label>
-              <Select value={status} onValueChange={setStatus}>
+              <Select value={status} onValueChange={(val) => setStatus(val as Incident['status'])}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
@@ -132,7 +127,7 @@ export function IncidentDialog({ serviceId, incident, onClose }: IncidentDialogP
             </div>
             <div className="space-y-2">
               <Label htmlFor="severity">Severity</Label>
-              <Select value={severity} onValueChange={setSeverity}>
+              <Select value={severity} onValueChange={(val) => setSeverity(val as Incident['severity'])}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select severity" />
                 </SelectTrigger>

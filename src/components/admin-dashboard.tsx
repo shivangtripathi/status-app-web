@@ -5,9 +5,8 @@ import { IncidentCard } from '@/components/incident-card';
 import { IncidentDialog } from '@/components/incident-dialog';
 import { IncidentUpdateDialog } from '@/components/incident-update-dialog';
 import { Button } from '@/components/ui/button';
-import { useStore } from '@/lib/store';
 import { Service, Incident } from '@/types';
-import { Activity, PlusCircle, AlertCircle, LogOut } from 'lucide-react';
+import { Activity, PlusCircle, LogOut } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/lib/auth';
 import { useNavigate } from 'react-router-dom';
@@ -17,8 +16,8 @@ import useIncidents from './api/incidents';
 export function AdminDashboard() {
   const navigate = useNavigate();
   const logout = useAuth((state) => state.logout);
-  const { services = [], isLoading } = useServices();
-  const { incidents = [], isLoading: incidentsLoading } = useIncidents();
+  const { services = [] } = useServices();
+  const { incidents = [] } = useIncidents();
   const [editingService, setEditingService] = useState<Service | undefined>();
   const [isAddingService, setIsAddingService] = useState(false);
   const [isAddingIncident, setIsAddingIncident] = useState(false);
@@ -49,16 +48,6 @@ export function AdminDashboard() {
                 Logout
             </Button>
             </div>
-          {/* <div className="flex items-center space-x-2">
-              <Button onClick={() => setIsAddingIncident(true)}>
-                <AlertCircle className="mr-2 h-4 w-4" />
-                Report Incident
-              </Button>
-              <Button onClick={() => setIsAddingService(true)}>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add Service
-              </Button>
-            </div> */}
         </div>
       </header>
 
